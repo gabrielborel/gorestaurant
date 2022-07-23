@@ -1,8 +1,26 @@
 import styled, { css } from 'styled-components';
+import { motion } from 'framer-motion';
 
-export const Container = styled.div`
+const variants = {
+  hidden: { y: 10, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: { duration: 0.5 },
+  },
+};
+
+interface ContainerProps {
+  available: boolean;
+}
+
+export const Container = styled(motion.div).attrs(() => ({
+  initial: 'hidden',
+  variants,
+}))<ContainerProps>`
   background: #f0f0f5;
   border-radius: 8px;
+  max-width: 360px;
 
   header {
     background: #ffb84d;
@@ -12,9 +30,9 @@ export const Container = styled.div`
     transition: 0.3s opacity;
     text-align: center;
 
-    ${props =>
-    !props.available &&
-    css`
+    ${(props) =>
+      !props.available &&
+      css`
         opacity: 0.3;
       `};
 
@@ -33,7 +51,7 @@ export const Container = styled.div`
 
     p {
       color: #3d3d4d;
-
+      word-break: break-word;
       margin-top: 16px;
     }
 
